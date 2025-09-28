@@ -37,6 +37,22 @@ app.get("/api/product/:id" ,async (req,res) => {
     }
 })
 
+app.put("/api/product/:id" ,async (req,res) => {
+    try {
+        const {id} = req.params;
+        const product = await Product.findByIdAndUpdate(id,req.body);
+        
+        if(!product){
+            res.status(404).json({message:error.message})
+        }
+
+        const updatedProduct = await Product.findById(id)
+        res.status(200).json(updatedProduct)
+    } catch (error) {
+        res.status(500).json({message:error.message})
+    }
+})
+
 const uri = 'mongodb+srv://biniyamagegnehu2_db:%40biniyamnohaminmd@cluster0.uuk3rel.mongodb.net/crudapi?retryWrites=true&w=majority&appName=Cluster0'
 
 mongoose.connect(uri).then(() => {

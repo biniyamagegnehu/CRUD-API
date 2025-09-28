@@ -53,6 +53,21 @@ app.put("/api/product/:id" ,async (req,res) => {
     }
 })
 
+app.delete("/api/product/:id" , async (req,res) => {
+    try {
+        const {id} = req.params;
+        const product = await Product.findByIdAndDelete(id);
+
+        if(!product){
+            res.status(400).json({message:error.message})
+        }
+
+        res.status(200).json({message:"Deleted succefully"})
+    } catch (error) {
+        res.status(500).json({message:error.message})
+    }
+})
+
 const uri = 'mongodb+srv://biniyamagegnehu2_db:%40biniyamnohaminmd@cluster0.uuk3rel.mongodb.net/crudapi?retryWrites=true&w=majority&appName=Cluster0'
 
 mongoose.connect(uri).then(() => {

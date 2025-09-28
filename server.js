@@ -18,6 +18,15 @@ app.post("/api/product",async (req,res) => {
     }
 });
 
+app.get("/api/product" ,async (req,res) => {
+    try {
+        const product = await Product.find({})
+        res.status(200).json(product)
+    } catch (error) {
+        res.status(500).json({message:error.message})
+    }
+})
+
 const uri = 'mongodb+srv://biniyamagegnehu2_db:%40biniyamnohaminmd@cluster0.uuk3rel.mongodb.net/crudapi?retryWrites=true&w=majority&appName=Cluster0'
 
 mongoose.connect(uri).then(() => {
